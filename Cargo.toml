@@ -5,10 +5,10 @@ authors = ["takayuki <takayuki@idein.jp>"]
 
 [lib]
 name = "libbcm_host_sys"
-path = "lib.rs"
+path = "src/lib.rs"
 
 [build-dependencies]
-bindgen = "0.26.3"
+bindgen = "0.32.1"
 
 [dependencies]
 

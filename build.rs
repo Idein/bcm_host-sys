@@ -4,31 +4,30 @@ use std::env;
 use std::path::PathBuf;
 
 fn main() {
-    // Tell cargo to tell rustc to link the system bzip2
-    // shared library.
-    // println!("cargo:rustc-link-lib=bz2");
+    // Tell cargo to tell rustc to link the system bcm_host shared library.
 	println!("cargo:rustc-link-lib=bcm_host");
-	println!("cargo:rustc-link-lib=brcmEGL");
-	println!("cargo:rustc-link-lib=brcmGLESv2");
-	println!("cargo:rustc-link-lib=brcmOpenVG");
-	println!("cargo:rustc-link-lib=brcmWFC");
-	println!("cargo:rustc-link-lib=containers");
-	println!("cargo:rustc-link-lib=debug_sym");
-	println!("cargo:rustc-link-lib=dtovl");
-	println!("cargo:rustc-link-lib=EGL");
-	println!("cargo:rustc-link-lib=elftoolchain");
-	println!("cargo:rustc-link-lib=GLESv2");
-	println!("cargo:rustc-link-lib=mmal_components");
-	println!("cargo:rustc-link-lib=mmal_core");
-	println!("cargo:rustc-link-lib=mmal");
-	println!("cargo:rustc-link-lib=mmal_util");
-	println!("cargo:rustc-link-lib=mmal_vc_client");
-	println!("cargo:rustc-link-lib=openmaxil");
-	println!("cargo:rustc-link-lib=OpenVG");
+	//println!("cargo:rustc-link-lib=brcmEGL");
+	//println!("cargo:rustc-link-lib=brcmGLESv2");
+	//println!("cargo:rustc-link-lib=brcmOpenVG");
+	//println!("cargo:rustc-link-lib=brcmWFC");
+	//println!("cargo:rustc-link-lib=containers");
+	//println!("cargo:rustc-link-lib=debug_sym");
+	//println!("cargo:rustc-link-lib=dtovl");
+	//println!("cargo:rustc-link-lib=EGL");
+	//println!("cargo:rustc-link-lib=elftoolchain");
+	//println!("cargo:rustc-link-lib=GLESv2");
+	//println!("cargo:rustc-link-lib=mmal_components");
+	//println!("cargo:rustc-link-lib=mmal_core");
+	//println!("cargo:rustc-link-lib=mmal");
+	//println!("cargo:rustc-link-lib=mmal_util");
+	//println!("cargo:rustc-link-lib=mmal_vc_client");
+	//println!("cargo:rustc-link-lib=openmaxil");
+	//println!("cargo:rustc-link-lib=OpenVG");
 	println!("cargo:rustc-link-lib=vchiq_arm");
 	println!("cargo:rustc-link-lib=vcos");
-	println!("cargo:rustc-link-lib=vcsm");
-	println!("cargo:rustc-link-lib=WFC");
+	//println!("cargo:rustc-link-lib=vcsm");
+	//println!("cargo:rustc-link-lib=WFC");
+	println!("cargo:rustc-link-lib=pthread");
 
 
     // The bindgen::Builder is the main entry point
@@ -38,6 +37,11 @@ fn main() {
         // The input header we would like to generate
         // bindings for.
         .header("wrapper.h")
+		.clang_args(&["-D", "USE_VCHIQ_ARM"])
+		.clang_args(&["-I", "/usr/lib/llvm-3.9/lib/clang/3.9.1/include"])
+		.clang_args(&["-I", "/opt/vc/include"])
+		.clang_args(&["-I", "/opt/vc/include/interface/vmcs_host/linux"])
+		.clang_args(&["-I", "/opt/vc/include/interface/vcos/pthreads"])
         // Finish the builder and generate the bindings.
         .generate()
         // Unwrap the Result and panic on failure.
