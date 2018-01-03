@@ -1,10 +1,10 @@
 [package]
-name = "libbcm-host-sys"
+name = "bcm-host-sys"
 version = "0.1.0"
 authors = ["takayuki <takayuki@idein.jp>"]
 
 [lib]
-name = "libbcm_host_sys"
+name = "bcm_host_sys"
 path = "src/lib.rs"
 
 [build-dependencies]
