@@ -27,6 +27,19 @@ Then, building with environment variables listed below:
     pi$ cargo build
 
 
+Requirements
+----------------------------------------------------------------
+
+- clang
+- `libbcm_host`_
+
+
+Building on the Raspberry Pi, below packages are required:
+
+- libraspberrypi-dev
+- libclang-3.9-dev
+
+
 Environment Variables
 ----------------------------------------------------------------
 
