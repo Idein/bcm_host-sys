@@ -15,39 +15,37 @@ Add it to your `Cargo.toml` file
     [dependencies]
     bcm_host_sys = "*"
 
-Then, building with environment variables listed below:
-
-* :envvar:`VC_INCLUDE_DIR`
-* :envvar:`CLANG_INCLUDE_DIR`
+Then, building with the environment variable :envvar:`CLANG_INCLUDE_DIR` .
 
 .. code-block:: shell
 
-    pi$ VC_INCLUDE_DIR=/path/to/vc/opt/include
-    pi$ CLANG_INCLUDE_DIR=/usr/lib/llvm-3.9/lib/clang/3.9.1/include
-    pi$ cargo build
+    pi@raspberry$ CLANG_INCLUDE_DIR=/path/to/clang/include cargo build
+
+
+For example:
+
+.. code-block:: shell
+
+    pi@raspberry$ CLANG_INCLUDE_DIR=/usr/lib/llvm-3.9/lib/clang/3.9.1/include cargo build
 
 
 Requirements
 ----------------------------------------------------------------
 
-- clang
+- pkg-config
+- libclang
 - `libbcm_host`_
 
 
 Building on the Raspberry Pi, below packages are required:
 
+- pkg-config
 - libraspberrypi-dev
-- libclang-3.9-dev
+- libclang-<ver>-dev (ver=3.9 is confirmed)
 
 
 Environment Variables
 ----------------------------------------------------------------
-
-.. envvar:: VC_INCLUDE_DIR
-
-   PATH to directory contains header files of libbcm_host.so.
-   If the value is not specified, /opt/vc/include is used.
-
 
 .. envvar:: CLANG_INCLUDE_DIR
 
