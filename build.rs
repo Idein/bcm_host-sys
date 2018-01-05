@@ -32,10 +32,10 @@ fn main() {
         // The input header we would like to generate
         // bindings for.
         .header("wrapper.h")
-                // derive from `pkg-config --cflags bcm_host`
-		.clang_args(&["-D", "USE_VCHIQ_ARM"])
-		.clang_args(&bcm_host_args)
-		.clang_args(&clang_args)
+        // derive from `pkg-config --cflags bcm_host`
+        .clang_args(&["-D", "USE_VCHIQ_ARM"])
+        .clang_args(&bcm_host_args)
+        .clang_args(&clang_args)
         // Finish the builder and generate the bindings.
         .generate()
         // Unwrap the Result and panic on failure.
