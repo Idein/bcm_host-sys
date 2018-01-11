@@ -15,18 +15,18 @@ Add it to your `Cargo.toml` file
     [dependencies]
     bcm_host_sys = "*"
 
-Then, building with the environment variable :envvar:`CLANG_INCLUDE_DIR` .
+Then, building with the environment variable :envvar:`C_INCLUDE_DIR` .
 
 .. code-block:: shell
 
-    pi@raspberry$ CLANG_INCLUDE_DIR=/path/to/clang/include cargo build
+    pi@raspberry$ C_INCLUDE_DIR=/path/to/c/include cargo build
 
 
 For example:
 
 .. code-block:: shell
 
-    pi@raspberry$ CLANG_INCLUDE_DIR=/usr/lib/llvm-3.9/lib/clang/3.9.1/include cargo build
+    pi@raspberry$ C_INCLUDE_DIR=/usr/lib/llvm-3.9/lib/clang/3.9.1/include cargo build
 
 
 Requirements
@@ -47,11 +47,25 @@ Building on the Raspberry Pi, below packages are required:
 Environment Variables
 ----------------------------------------------------------------
 
-.. envvar:: CLANG_INCLUDE_DIR
+.. envvar:: C_INCLUDE_DIR
 
-   PATH to directory contains header files of clang.
+   PATH to directory contains C header files.
    e.g. /usr/lib/llvm-3.9/lib/clang/3.9.1/include
 
+Build
+----------------------------------------------------------------
+
+Cross Build
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: shell
+
+    $ curl -O
+    $ dpkg -x /
+    $ export PKG_CONFIG_PATH=/opt/vc/lib/pkgconfig:$PKG_CONFIG_PATH
+    $ export PKG_CONFIG_ALLOW_CROSS
+    $ export C_INCLUDE_DIR=/x-tools/sysroot/usr/include
+    $ cargo build --target=arm-unknown-linux-gnueabihf
 
 Link
 ----------------------------------------------------------------
