@@ -15,18 +15,18 @@ Add it to your `Cargo.toml` file
     [dependencies]
     bcm_host_sys = "*"
 
-Then, building with the environment variable :envvar:`C_INCLUDE_DIR` .
+Then, building with the environment variable :envvar:`C_INCLUDE_PATH` .
 
 .. code-block:: shell
 
-    pi@raspberry$ C_INCLUDE_DIR=/path/to/c/include cargo build
+    pi@raspberry$ C_INCLUDE_PATH=/path/to/clang/include cargo build
 
 
 For example:
 
 .. code-block:: shell
 
-    pi@raspberry$ C_INCLUDE_DIR=/usr/lib/llvm-3.9/lib/clang/3.9.1/include cargo build
+    pi@raspberry$ C_INCLUDE_PATH=/usr/lib/llvm-3.9/lib/clang/3.9.1/include cargo build
 
 
 Requirements
@@ -47,10 +47,11 @@ Building on the Raspberry Pi, below packages are required:
 Environment Variables
 ----------------------------------------------------------------
 
-.. envvar:: C_INCLUDE_DIR
+.. envvar:: C_INCLUDE_PATH
 
    PATH to directory contains C header files.
    e.g. /usr/lib/llvm-3.9/lib/clang/3.9.1/include
+
 
 Build
 ----------------------------------------------------------------
@@ -60,12 +61,14 @@ Cross Build
 
 .. code-block:: shell
 
+    $ apt-get install libclang-3.9-dev
     $ curl -O http://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/libraspberrypi-dev_1.20171029-1_armhf.deb
     $ dpkg -x libraspberrypi-dev_1.20171029-1_armhf.deb /
-    $ export PKG_CONFIG_PATH=/opt/vc/lib/pkgconfig
-    $ export PKG_CONFIG_ALLOW_CROSS
-    $ export C_INCLUDE_DIR=/x-tools/sysroot/usr/include
+    $ export PKG_CONFIG_PATH=/opt/vc/lib/pkgconfig:$PKG_CONFIG_PATH
+    $ export PKG_CONFIG_ALLOW_CROSS=1
+    $ export C_INCLUDE_PATH=/x-tools/armv6-rpi-linux-gnueabihf/armv6-rpi-linux-gnueabihf/sysroot/usr/include:/usr/lib/llvm-3.9/lib/clang/3.9.1/include
     $ cargo build --target=arm-unknown-linux-gnueabihf
+
 
 Link
 ----------------------------------------------------------------

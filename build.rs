@@ -18,8 +18,8 @@ fn main() {
 
     // Path to directories of C header
     let include_dirs: Vec<PathBuf> = vec![
-        Path::new(&env::var("C_INCLUDE_DIR").expect(
-            "C_INCLUDE_DIR like: /usr/lib/llvm-3.9/lib/clang/3.9.1/include",
+        Path::new(&env::var("C_INCLUDE_PATH").expect(
+            "C_INCLUDE_PATH like: /usr/lib/llvm-3.9/lib/clang/3.9.1/include",
         )).into(),
     ];
 
