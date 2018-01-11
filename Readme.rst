@@ -60,9 +60,9 @@ Cross Build
 
 .. code-block:: shell
 
-    $ curl -O
-    $ dpkg -x /
-    $ export PKG_CONFIG_PATH=/opt/vc/lib/pkgconfig:$PKG_CONFIG_PATH
+    $ curl -O http://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/libraspberrypi-dev_1.20171029-1_armhf.deb
+    $ dpkg -x libraspberrypi-dev_1.20171029-1_armhf.deb /
+    $ export PKG_CONFIG_PATH=/opt/vc/lib/pkgconfig
     $ export PKG_CONFIG_ALLOW_CROSS
     $ export C_INCLUDE_DIR=/x-tools/sysroot/usr/include
     $ cargo build --target=arm-unknown-linux-gnueabihf
