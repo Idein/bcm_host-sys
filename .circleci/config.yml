@@ -23,6 +23,16 @@ jobs:
             - libraspberrypi-dev_1.20171029-1_armhf.deb
       - run: |
           dpkg -x libraspberrypi-dev_1.20171029-1_armhf.deb /
+      - run: cat Cargo.toml Cargo.lock > /tmp/concat-cargo.toml
+      - restore_cache:
+          key: cache-cargo-registry-{{ checksum "/tmp/concat-cargo.toml" }}
+      - run: |
+          cargo fetch
+      - save_cache:
+          key: cache-cargo-registry-{{ checksum "/tmp/concat-cargo.toml" }}
+          paths:
+            - ~/.cargo/registry/
+      - run: |
           cargo build --target=arm-unknown-linux-gnueabihf
 
 workflows:
