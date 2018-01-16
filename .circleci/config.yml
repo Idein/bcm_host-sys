@@ -10,13 +10,20 @@ jobs:
           C_INCLUDE_PATH: /home/idein/x-tools/armv6-rpi-linux-gnueabihf/armv6-rpi-linux-gnueabihf/sysroot/usr/include:/usr/lib/llvm-3.9/lib/clang/3.9.1/include
     steps:
       - checkout
-      - run: apt update -y && apt install -y pkg-config libraspberrypi-dev libclang-3.9-dev
+      - run: apt update -y && apt install -y pkg-config libclang-3.9-dev
+      - restore_cache:
+          key: libraspberrypi-cache-{{ checksum "libraspberrypi-dev_1.20171029-1_armhf.deb" }}
       - run: |
-          curl -O http://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/libraspberrypi-dev_1.20171029-1_armhf.deb
+          if [ ! -e libraspberrypi-dev_1.20171029-1_armhf.deb ]; then
+            curl -O http://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/libraspberrypi-dev_1.20171029-1_armhf.deb
+          fi
+      - save_cache:
+          key: libraspberrypi-cache-{{ checksum "libraspberrypi-dev_1.20171029-1_armhf.deb" }}
+          paths:
+            - libraspberrypi-dev_1.20171029-1_armhf.deb
+      - run: |
           dpkg -x libraspberrypi-dev_1.20171029-1_armhf.deb /
           cargo build --target=arm-unknown-linux-gnueabihf
-      - run: |
-          cargo test
 
 workflows:
   version: 2
