@@ -1,7 +1,7 @@
 extern crate bindgen;
-extern crate pkg_config;
-extern crate log;
 extern crate env_logger;
+extern crate log;
+extern crate pkg_config;
 
 use std::env;
 use std::path::{Path, PathBuf};
@@ -18,9 +18,9 @@ fn main() {
 
     // Path to directories of C header
     let include_dirs: Vec<PathBuf> = vec![
-        Path::new(&env::var("C_INCLUDE_PATH").expect(
-            "C_INCLUDE_PATH like: /usr/lib/llvm-3.9/lib/clang/3.9.1/include",
-        )).into(),
+        Path::new(&env::var("C_INCLUDE_PATH")
+            .expect("C_INCLUDE_PATH like: /usr/lib/llvm-3.9/lib/clang/3.9.1/include"))
+            .into(),
     ];
 
     let include_args: Vec<_> = include_dirs

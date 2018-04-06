@@ -1,7 +1,7 @@
 extern crate bcm_host_sys;
+extern crate env_logger;
 #[macro_use]
 extern crate log;
-extern crate env_logger;
 
 use std::mem;
 use std::ptr;
@@ -25,7 +25,6 @@ fn strcpy_offset() {
         assert_eq!(11, offset);
     }
 }
-
 
 /// # Summary
 /// Getting size of gpu memory.
