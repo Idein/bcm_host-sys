@@ -21,9 +21,41 @@ jobs:
             - ~/.cargo/registry/
       - run: |
           cargo build --target=arm-unknown-linux-gnueabihf
+      - persist_to_workspace:
+          root: .
+          paths:
+              - target
+
+  test:
+    working_directory: /tmp/bcm_host_sys
+    docker:
+      - image: idein/cross-rpi-rust:latest
+        environment:
+          PKG_CONFIG_PATH: /opt/vc/lib/pkgconfig:$PKG_CONFIG_PATH
+          PKG_CONFIG_ALLOW_CROSS: 1
+          C_INCLUDE_PATH: /usr/lib/llvm-3.9/lib/clang/3.9.1/include:/home/idein/x-tools/armv6-rpi-linux-gnueabihf/armv6-rpi-linux-gnueabihf/sysroot/usr/include
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/actcast_client/api_client
+
+      - run: cat Cargo.* > /tmp/concat-cargo.toml
+      - restore_cache:
+          key: cache-cargo-registry-{{ checksum "/tmp/concat-cargo.toml" }}
+      - run: |
+          cargo fetch
+      - save_cache:
+          key: cache-cargo-registry-{{ checksum "/tmp/concat-cargo.toml" }}
+          paths:
+            - ~/.cargo/registry/
+      - run: |
+          cargo test --target=arm-unknown-linux-gnueabihf
 
 workflows:
   version: 2
   build_and_test:
     jobs:
       - build
+      - test:
+          requires:
+            - build
