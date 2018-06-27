@@ -10,21 +10,16 @@ fn main() {
     // Tell cargo to tell rustc to link the system bcm_host shared library.
     let bcm_host = pkg_config::probe_library("bcm_host").unwrap();
 
-    let bcm_host_args: Vec<_> = bcm_host
-        .include_paths
-        .iter()
-        .flat_map(|path| vec!["-I", path.to_str().unwrap()])
-        .collect();
-
     // Path to directories of C header
-    let include_dirs: Vec<PathBuf> = vec![
-        Path::new(&env::var("C_INCLUDE_PATH")
-            .expect("C_INCLUDE_PATH like: /usr/lib/llvm-3.9/lib/clang/3.9.1/include"))
+    let include_dirs: Vec<_> = vec![
+        Path::new(&env::var("LIBCLANG_INCLUDE_PATH")
+            .expect("LIBCLANG_INCLUDE_PATH like: '/usr/include/clang/3.9.1/include'")
             .into(),
     ];
 
     let include_args: Vec<_> = include_dirs
         .iter()
+        .chain(bcm_host.include_paths.iter())
         .flat_map(|path| vec!["-I", path.to_str().unwrap()])
         .collect();
 
@@ -37,7 +32,6 @@ fn main() {
         .header("wrapper.h")
         // derive from `pkg-config --cflags bcm_host`
         .clang_args(&["-D", "USE_VCHIQ_ARM"])
-        .clang_args(&bcm_host_args)
         .clang_args(&include_args)
         // Finish the builder and generate the bindings.
         .generate()
