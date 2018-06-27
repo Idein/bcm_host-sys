@@ -60,7 +60,9 @@ Cross Build
 
 .. code-block:: shell
 
-    $ apt-get install libclang-3.9-dev
+    $ dpkg --add-architecture armhf
+    $ apt-get update
+    $ apt-get install libclang-3.9-dev libc6-dev:armhf
     $ curl -O http://archive.raspberrypi.org/debian/pool/main/r/raspberrypi-firmware/libraspberrypi-dev_1.20171029-1_armhf.deb
     $ dpkg -x libraspberrypi-dev_1.20171029-1_armhf.deb /
     $ export PKG_CONFIG_PATH=/opt/vc/lib/pkgconfig:$PKG_CONFIG_PATH
