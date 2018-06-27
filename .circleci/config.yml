@@ -27,35 +27,8 @@ jobs:
           paths:
               - target
 
-  test:
-    working_directory: /tmp/bcm_host_sys
-    docker:
-      - image: idein/cross-rpi-rust:latest
-        environment:
-          LIBCLANG_INCLUDE_PATH: /usr/include/clang/3.9.1/include
-          PKG_CONFIG_PATH: /opt/vc/lib/pkgconfig:$PKG_CONFIG_PATH
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp/actcast_client/api_client
-
-      - run: cat Cargo.* > /tmp/concat-cargo.toml
-      - restore_cache:
-          key: cache-cargo-registry-{{ checksum "/tmp/concat-cargo.toml" }}
-      - run: |
-          cargo fetch
-      - save_cache:
-          key: cache-cargo-registry-{{ checksum "/tmp/concat-cargo.toml" }}
-          paths:
-            - ~/.cargo/registry/
-      - run: |
-          cargo test --target=arm-unknown-linux-gnueabihf
-
 workflows:
   version: 2
   build_and_test:
     jobs:
       - build
-      - test:
-          requires:
-            - build
