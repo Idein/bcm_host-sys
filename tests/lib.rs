@@ -1,14 +1,9 @@
-extern crate bcm_host_sys;
-extern crate env_logger;
-#[macro_use]
-extern crate log;
-
+use bcm_host_sys as sys;
+use log::debug;
 use std::mem;
 use std::ptr;
 use std::os::raw as ctype;
 use std::ffi::CStr;
-
-use bcm_host_sys as sys;
 
 #[test]
 fn strcpy_offset() {

@@ -2,6 +2,7 @@
 name = "bcm-host-sys"
 version = "0.1.0"
 authors = ["takayuki <takayuki@idein.jp>"]
+edition = "2018"
 
 [lib]
 name = "bcm_host_sys"
@@ -10,8 +11,6 @@ path = "src/lib.rs"
 [build-dependencies]
 bindgen = "0.37.0"
 pkg-config = "0.3.11"
-log = "0.4.1"
-env_logger = "0.4.3"
 
 [dependencies]
 

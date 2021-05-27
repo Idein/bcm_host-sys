@@ -1,8 +1,3 @@
-extern crate bindgen;
-extern crate env_logger;
-extern crate log;
-extern crate pkg_config;
-
 use std::env;
 use std::path::{Path, PathBuf};
 
